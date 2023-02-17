@@ -10,7 +10,7 @@ function escribeTras2Segundos(texto, callback) {
 //Creamos un bucle asíncrono recursivo con callbacks
 function serie(n, fn, callback){ 
     n = n - 1;
-    if (n == 0){
+    if (n === 0){
         //termino el bucle
         callback();
         return

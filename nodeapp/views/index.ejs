@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <!-- <h1><%= title %></h1> -->
+    <% include cabecera.ejs %>
+    <p><%= nombre %>, welcome to <%= title %></p>
+
+    <h2>Bucles </h2>
+    <p><u>Listado de usuarios con un bucle forEach</u></p>
+
+    <% usuarios.forEach(usuario => { %>
+      <p>Usuario <%= usuario.nombre %>  tiene <%= usuario.edad %> años</p>
+      <% }) %>
+
+    <h2>Condicionales</h2>
+    <p><u>Bucle con condicionales if</u></p>
+    <% if (paridad) { %>
+      <p>El segundo actual es par</p>
+    <% } else { %>
+        <p>El segundo actual es impar</p>
+    <% } %>
+
+    <p>Segundo actual: <%= segundoActual %></p>
+
+    <p><u>Listado de Agentes:</u></p>
+
+    <% agentes.forEach(agente => { %>
+      <p>Agente <%= agente.name %>  tiene <%= agente.age %> años</p>
+      <% }) %>
+
+  </body>
+</html>
