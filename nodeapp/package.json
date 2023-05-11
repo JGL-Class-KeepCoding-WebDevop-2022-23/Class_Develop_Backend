@@ -12,6 +12,7 @@
     "basic": "^2.0.3",
     "basic-auth": "^2.0.1",
     "bcrypt": "^5.1.0",
+    "connect-mongo": "^5.0.0",
     "cookie-parser": "~1.4.4",
     "cross-env": "^7.0.3",
     "debug": "~2.6.9",

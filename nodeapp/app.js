@@ -10,6 +10,7 @@ const PrivadoController = require('./controllers/PrivadoController');
 const { cookie } = require('express-validator');
 const session = require('express-session');
 const sessionAuth = require('./lib/sessionAuthMiddleware');
+const MongoStore = require('connect-mongo');
 
 require('./lib/connectMongoose'); // Para que arranque la librería del Mongoose y se conecte con Mongoose a la BD
 
@@ -53,6 +54,9 @@ app.use(
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 2, // expira a los 2 días de inactividad
         },
+        store: MongoStore.create({
+            mongoUrl: 'mongodb://127.0.0.1:27017/cursonode',
+        }),
     })
 );
 
