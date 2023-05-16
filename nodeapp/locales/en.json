@@ -1,19 +1,24 @@
 {
-	"Header:": "Header:",
+	"Welcome to": "Welcome to",
+	"Header": "Header",
 	"Loops": "Loops",
 	"Conditionals": "Conditionals",
 	"Agent list": "Agent list",
-	"Header": "Header",
 	"i18n example for plurals": "i18n example for plurals",
 	"Mouse": {
 		"one": "Mouse",
 		"other": "Mice"
 	},
 	"Text": "Text",
-	"Welcome to": "Welcome to",
 	"Enter a new age of web design": "Enter a new age of web design",
+	"Features": "Features",
+	"Download": "Download",
+	"Send Feedback": "Send Feedback",
 	"Sign in": "Sign in",
 	"Invalid credentials": "Invalid credentials",
-	"Private Zone": "Private Zone",
-	"User mail is": "User mail is"
+	"Private zone": "Private zone",
+	"User email is": "User email is",
+	"Logout": "Logout",
+	"Login": "Login",
+	"Private": "Private"
 }

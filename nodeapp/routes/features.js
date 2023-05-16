@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-/*GET /features*/
+/* GET /features */
 router.get('/', (req, res, next) => {
-    res.render('features');
+  res.render('features');
 });
 
 module.exports = router;

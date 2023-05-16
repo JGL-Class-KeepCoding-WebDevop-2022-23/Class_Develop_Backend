@@ -7,9 +7,9 @@ const basicAuthMiddleware = require('./lib/basicAuthMiddleware');
 const i18n = require('./lib/i18nConfigure');
 const LoginController = require('./controllers/LoginController');
 const PrivadoController = require('./controllers/PrivadoController');
-const { cookie } = require('express-validator');
 const session = require('express-session');
 const sessionAuth = require('./lib/sessionAuthMiddleware');
+const MongoStore = require('connect-mongo');
 
 require('./lib/connectMongoose'); // Para que arranque la librería del Mongoose y se conecte con Mongoose a la BD
 
@@ -53,20 +53,31 @@ app.use(
         cookie: {
             maxAge: 1000 * 60 * 60 * 24 * 2, // expira a los 2 días de inactividad
         },
+        store: MongoStore.create({
+            mongoUrl: process.env.MONGODB_CONNECTION_STR,
+        }),
     })
 );
 
-const loginController = new LoginController(); //Creamos instancio de LoginController
+const loginController = new LoginController(); //Creamos instancia de LoginController
 const privadoController = new PrivadoController();
 /**
  * Rutas del website
  */
+
+/* Hacemos que el objeto de sesión esté disponible al renderizar cualquier vista */
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next();
+  })
+/* --- */
 app.use('/', require('./routes/home'));
 app.use('/users', require('./routes/users'));
 app.use('/features', require('./routes/features'));
 app.use('/change-locale', require('./routes/change-locale'));
-app.get('/login', loginController.index); //Cuadno se hace una llamada a /login, es en LoginController donde mira
+app.get('/login', loginController.index); //Cuando se hace una llamada a /login, es en LoginController donde mira
 app.post('/login', loginController.post); //Llama a loginController cuando haya llamada POST
+app.gwt('/logout', loginController.logout);
 app.get('/privado', sessionAuth, privadoController.index);
 
 // catch 404 and forward to error handler

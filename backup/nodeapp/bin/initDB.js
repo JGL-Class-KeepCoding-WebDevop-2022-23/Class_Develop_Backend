@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv')
+
 const { Agente, Usuario } = require('../models');
 
 const connection = require('../lib/connectMongoose');

@@ -1,4 +1,4 @@
 module.exports = {
-    Agente: require('./Agente'),
-    Usuario: require('./Usuario'),
-  }
+  Agente: require('./Agente'),
+  Usuario: require('./Usuario'),
+}

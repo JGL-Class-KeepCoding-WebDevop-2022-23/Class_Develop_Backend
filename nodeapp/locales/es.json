@@ -3,7 +3,7 @@
 	"Header": "Cabecera",
 	"Loops": "Bucles",
 	"Conditionals": "Condicionales",
-	"Agent list": "Listado de Agentes",
+	"Agent list": "Lista de agentes",
 	"i18n example for plurals": "i18n example for plurals",
 	"Mouse": {
 		"one": "Ratón",
@@ -11,8 +11,14 @@
 	},
 	"Text": "Texto",
 	"Enter a new age of web design": "Entra en una nueva era de diseño web",
+	"Features": "Características",
+	"Download": "Descargar",
+	"Send Feedback": "Enviar Feedback",
 	"Sign in": "Entrar",
-	"Invalid credentials": "Usuario o contraseña incorrectas",
-	"Private Zone": "Private Zone",
-	"User mail is": "User mail is"
+	"Invalid credentials": "Credenciales invalidas",
+	"Private zone": "Zona privada",
+	"User email is": "Tu email es",
+	"Logout": "Logout",
+	"Login": "Login",
+	"Private": "Privado"
 }

@@ -7,7 +7,6 @@ const basicAuthMiddleware = require('./lib/basicAuthMiddleware');
 const i18n = require('./lib/i18nConfigure');
 const LoginController = require('./controllers/LoginController');
 const PrivadoController = require('./controllers/PrivadoController');
-const { cookie } = require('express-validator');
 const session = require('express-session');
 const sessionAuth = require('./lib/sessionAuthMiddleware');
 const MongoStore = require('connect-mongo');
@@ -17,7 +16,7 @@ require('./lib/connectMongoose'); // Para que arranque la librería del Mongoose
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views')); //Une dos strings que forman una ruta al sistema de ficheros según el sistema Operativo
+app.set('views', path.join(__dirname, 'views'));
 //__dirname devuelve la ruta completa hasta donde está __dirname
 app.set('view engine', 'ejs');
 app.set('x-powered-by', false);
@@ -26,7 +25,7 @@ app.locals.title = 'NodeApp';
 
 app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false })); //parsea url body
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -39,12 +38,11 @@ app.use('/prueba', (req, res, next) => {
 */
 
 /**
- * Rutas del Api
+ * Rutas del API
  */
 app.use('/api/agentes', basicAuthMiddleware, require('./routes/api/agentes'));
 
 app.use(i18n.init); //Middleware para integrar i18n en xpress. Si queremos que lea la cookie, debe de estar después del Midleware de la cookie.
-
 app.use(
     session({
         name: 'nodeapp-session',
@@ -55,22 +53,29 @@ app.use(
             maxAge: 1000 * 60 * 60 * 24 * 2, // expira a los 2 días de inactividad
         },
         store: MongoStore.create({
-            mongoUrl: 'mongodb://127.0.0.1:27017/cursonode',
+            mongoUrl: process.env.MONGODB_CONNECTION_STR,
         }),
     })
 );
 
-const loginController = new LoginController(); //Creamos instancio de LoginController
+const loginController = new LoginController(); //Creamos instancia de LoginController
 const privadoController = new PrivadoController();
+
 /**
- * Rutas del website
+ * Rutas del Website
  */
+// Hacemos que el objeto de sesión esté disponible al renderizar vistas
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next();
+});
 app.use('/', require('./routes/home'));
 app.use('/users', require('./routes/users'));
 app.use('/features', require('./routes/features'));
 app.use('/change-locale', require('./routes/change-locale'));
-app.get('/login', loginController.index); //Cuadno se hace una llamada a /login, es en LoginController donde mira
-app.post('/login', loginController.post); //Llama a loginController cuando haya llamada POST
+app.get('/login', loginController.index);
+app.post('/login', loginController.post);
+app.get('/logout', loginController.logout);
 app.get('/privado', sessionAuth, privadoController.index);
 
 // catch 404 and forward to error handler
@@ -83,10 +88,10 @@ app.use(function (req, res, next) {
 
 // error handler
 app.use(function (err, req, res, next) {
-    //Comprobar si es un error de validación
+    // comprobar si es un error de validación
     if (err.array) {
         // const errorInfo = err.array({ onlyFirstError: true })[0];
-        const errorInfo = err.errors[0]; //<-- Es otra forma.
+        const errorInfo = err.errors[0];
         err.message = `Error en ${errorInfo.location}, parámetro ${errorInfo.param} ${errorInfo.msg}`;
         err.status = 422;
     }
@@ -96,6 +101,7 @@ app.use(function (err, req, res, next) {
     /*Si lo que ha fallado es una petición al API
   devuelvo el error en formato JSON */
     //console.log(originalUrl)
+
     if (req.originalUrl.startsWith('/api/')) {
         res.json({ error: err.message });
         return;

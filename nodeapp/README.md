@@ -6,6 +6,12 @@ Install dependencies with:
 npm install
 ```
 
+Copy .env.example to .env and customize your variables.
+
+```sh
+cp .env.example .env
+```
+
 Initialize the database with:
 
 ```sh
@@ -18,7 +24,7 @@ Start in development mode:
 npm run dev
 ```
 
-## start in cluster mode
+Start in cluster mode:
 
 ```sh
 npm run cluster
